@@ -6,16 +6,14 @@
     "target": "ES2019",
     "lib": ["ES2019", "DOM"],
     "isolatedModules": false,
-    "noEmit": false,
-    "esModuleInterop": true,
-    "baseUrl": "."
+    "noEmit": false
   },
   "include": [
+    "next-env.d.ts",
     "./src/types/env.d.ts",
     "./src/types/next-auth.d.ts",
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.js"
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js"
   ]
 }

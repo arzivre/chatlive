@@ -6,12 +6,20 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite" // NOTE: sqlite does not work with NextAuth.js
+    provider = "mysql" // NOTE: sqlite does not work with NextAuth.js
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id String @id @default(cuid())
+model Post {
+  id     String       @id @default(uuid())
+  name   String
+  text   String
+  source String
+
+  // To return `Date`s intact through the API we need to add data transformers
+  // https://trpc.io/docs/data-transformers
+  createdAt DateTime @unique @default(now())
+  updatedAt DateTime @unique @default(now())
 }
 
 // Necessary for Next auth
