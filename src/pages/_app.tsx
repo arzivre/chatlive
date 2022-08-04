@@ -36,11 +36,11 @@ MyApp.getInitialProps = async ({ ctx }) => {
 function getEndingLink() {
   if (typeof window === 'undefined') {
     return httpBatchLink({
-      url: `${NEXT_PUBLIC_APP_URL}/api/trpc`,
+      url: `${NEXT_PUBLIC_APP_URL || RAILWAY_STATIC_URL}/api/trpc`,
     })
   }
   const client = createWSClient({
-    url: NEXT_PUBLIC_WS_URL || 'ws://localhost:3001',
+    url: NEXT_PUBLIC_WS_URL || RAILWAY_STATIC_URL || 'ws://localhost:3001',
   })
   return wsLink<AppRouter>({
     client,
