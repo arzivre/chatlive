@@ -11,11 +11,15 @@ import '../styles/globals.css'
 
 const { publicRuntimeConfig } = getConfig()
 
-const { NEXT_PUBLIC_APP_URL, NEXT_PUBLIC_WS_URL } = publicRuntimeConfig
+const { NEXT_PUBLIC_APP_URL, NEXT_PUBLIC_WS_URL, RAILWAY_STATIC_URL } =
+  publicRuntimeConfig
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <SessionProvider session={pageProps.session}>
+    <SessionProvider
+      session={pageProps.session}
+      basePath={`${NEXT_PUBLIC_APP_URL || RAILWAY_STATIC_URL}/api/auth`}
+    >
       <Component {...pageProps} />
     </SessionProvider>
   )
