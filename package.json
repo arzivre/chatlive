@@ -11,7 +11,7 @@
     "dev:next": "next dev",
     "dev:wss": "cross-env PORT=3001 nodemon --watch src --ext .ts,.tsx,js,jsx --signal SIGTERM --exec \"ts-node --project tsconfig.server.json src/server/wssDevServer.ts\"",
     "dev": "run-p dev:*",
-    "start": "next start",
+    "start": "cross-env NODE_ENV=production node dist/server/prodServer.js",
     "lint": "next lint",
     "postinstall": "prisma generate"
   },

@@ -3,23 +3,14 @@ import { loggerLink } from '@trpc/client/links/loggerLink'
 import { wsLink, createWSClient } from '@trpc/client/links/wsLink'
 import { withTRPC } from '@trpc/next'
 import { getSession, SessionProvider } from 'next-auth/react'
-import getConfig from 'next/config'
 import { AppType } from 'next/dist/shared/lib/utils'
 import { AppRouter } from 'server/routers/_app'
 import superjson from 'superjson'
 import '../styles/globals.css'
 
-const { publicRuntimeConfig } = getConfig()
-
-const { NEXT_PUBLIC_APP_URL, NEXT_PUBLIC_WS_URL, RAILWAY_STATIC_URL } =
-  publicRuntimeConfig
-
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <SessionProvider
-      session={pageProps.session}
-      basePath={`${NEXT_PUBLIC_APP_URL || RAILWAY_STATIC_URL}/api/auth`}
-    >
+    <SessionProvider session={pageProps.session} basePath={`/api/auth`}>
       <Component {...pageProps} />
     </SessionProvider>
   )
@@ -36,11 +27,11 @@ MyApp.getInitialProps = async ({ ctx }) => {
 function getEndingLink() {
   if (typeof window === 'undefined') {
     return httpBatchLink({
-      url: `${NEXT_PUBLIC_APP_URL || RAILWAY_STATIC_URL}/api/trpc`,
+      url: `${process.env.APP_URL}/api/trpc`,
     })
   }
   const client = createWSClient({
-    url: NEXT_PUBLIC_WS_URL || RAILWAY_STATIC_URL || 'ws://localhost:3001',
+    url: process.env.WS_URL || 'ws://localhost:3000',
   })
   return wsLink<AppRouter>({
     client,
